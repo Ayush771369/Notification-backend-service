@@ -37,7 +37,7 @@ In modern applications, notification delivery (email, webhooks, push, SMS) prese
 - **Rate Limits**: External providers enforce rate limits that must be respected
 - **Auditability**: Tracking notification status and delivery metrics is essential
 
-### Our Solution
+### My Solution
 This service decouples **notification ingestion** from **notification delivery** using a robust worker-based architecture:
 
 - **Non-blocking API**: Notifications are queued instantly and processed asynchronously
