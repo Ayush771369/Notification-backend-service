@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  Id        String     @id @default(uuid())
+  email     String     @unique
+  name      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  projects  Project[]
+  status    UserStatus @default(ACTIVE)
+}
+
+model Project {
+  Id         String        @id @default(uuid())
+  name       String
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  apiKeys    APIKey[]
+  userId     String
+  user       User          @relation(fields: [userId], references: [Id])
+  status     ProjectStatus @default(ACTIVE)
+  rateLimit  Int           @default(1000)
+  dailyQuota Int           @default(10000)
+
+  @@index([userId])
+}
+
+model APIKey {
+  Id        String       @id @default(uuid())
+  key       String       @unique
+  projectId String
+  project   Project      @relation(fields: [projectId], references: [Id])
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  status    ApiKeyStatus @default(ACTIVE)
+
+  @@index([projectId])
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum ApiKeyStatus {
+  ACTIVE
+  REVOKED
+}
+
+enum ProjectStatus {
+  ACTIVE
+  PAUSED
+  DISABLED
+}
