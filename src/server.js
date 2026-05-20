@@ -12,3 +12,7 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is healthy' });
 });
 console.log("Server database url: ", process.env.DATABASE_URL);
+
+app.get("/", (req, res) => {
+    res.send("Notification backend is running 🚀");
+});
