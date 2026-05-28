@@ -1,4 +1,4 @@
-# 🚀 Async Notification Service
+# 🚀 RELAYx
 
 A production-grade, asynchronous notification delivery system built for scale and reliability. This service handles email, webhooks, push notifications, and SMS through a unified API with automatic retries, rate limiting, and multi-provider support.
 
